@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Varsity Girls Soccer – Speed, Strength & Conditioning</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0a0f1e;}
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:#0f172a;}
+  ::-webkit-scrollbar-thumb{background:#334155;border-radius:4px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const research = [
+  { citation: "FIFA 11+ (Soligard et al., 2008)", note: "Structured warm-up reduces injuries by up to 32% in adolescent female players." },
+  { citation: "Faigenbaum et al. (2009)", note: "Youth resistance training is safe, effective, and improves strength, speed, and body composition." },
+  { citation: "Myer et al. (2011)", note: "Neuromuscular training reduces ACL injury risk significantly in female athletes aged 14–18." },
+  { citation: "Petersen et al. (2011)", note: "Nordic hamstring curls reduce hamstring strain injury rates by ~65%." },
+  { citation: "Buchheit & Laursen (2013)", note: "HIIT protocols improve VO₂max and soccer-specific aerobic capacity in adolescent players." },
+  { citation: "Meylan & Malatesta (2009)", note: "Plyometric training improves sprint, jump, and agility performance in young female soccer players." },
+  { citation: "NSCA Position Statement (2014)", note: "Progressive overload and periodization optimize adaptation in youth athletes." },
+];
+
+const offseasonPhases = [
+  {
+    phase:"Phase 1",weeks:"Weeks 1–4",focus:"Foundation",color:"#4ade80",
+    description:"Build movement quality, aerobic base, and injury-resistant foundations. Low intensity, high technique focus.",
+    sessions:[
+      {label:"Session A",subtitle:"Lower Body Strength + Aerobic Base",duration:"40 min",blocks:[
+        {name:"FIFA 11+ Warm-Up",time:"10 min",exercises:["Jogging in pairs (forward, hip out/in, shoulder contact) — 2 min","Hip circles, leg swings, walking lunges — 3 min","Dynamic hamstring + calf stretches — 2 min","Light skips and high knees — 3 min"]},
+        {name:"Strength Block",time:"20 min",exercises:["Bodyweight Squat — 3×12 (focus: knees tracking over toes)","Romanian Deadlift (light DB) — 3×10/side","Lateral Band Walk — 2×15/side (glute activation)","Nordic Hamstring Curl (eccentric only) — 2×6 (slow lower, 3–4 sec)","Single-Leg Balance — 3×30 sec/side"]},
+        {name:"Aerobic Conditioning",time:"8 min",exercises:["Continuous aerobic run at 65–70% max HR — 8 min","Target: conversational pace (builds aerobic base)"]},
+        {name:"Cool-Down",time:"2 min",exercises:["Static hip flexor, quad, hamstring holds — 30 sec each"]},
+      ]},
+      {label:"Session B",subtitle:"Core, Upper Body + Speed Mechanics",duration:"38 min",blocks:[
+        {name:"Dynamic Warm-Up",time:"8 min",exercises:["A-skips, B-skips, carioca — 2×20m each","Arm swings, scapular circles — 2 min","Glute bridges, dead bugs — 2×10 each"]},
+        {name:"Speed Mechanics",time:"10 min",exercises:["Wall drills (high-knee drive hold) — 3×5/side","Falling starts (lean & drive) — 4×15m","Acceleration 10m sprints — 4 reps (full recovery)"]},
+        {name:"Strength/Core Block",time:"15 min",exercises:["Push-Up (chest to floor) — 3×8–10","TRX or Band Row — 3×10","Dead Bug — 3×8/side (opposite arm + leg extend)","Pallof Press — 2×10/side","Side Plank — 2×25 sec/side"]},
+        {name:"Cool-Down",time:"5 min",exercises:["Thoracic rotation, child's pose, lat stretch — 30 sec each"]},
+      ]},
+      {label:"Session C",subtitle:"Full Body + Aerobic Development",duration:"42 min",blocks:[
+        {name:"FIFA 11+ Warm-Up",time:"10 min",exercises:["Running variations (forward, backward, cutting) — 3 min","Copenhagen adductor plank — 2×8 sec/side","Single-leg Romanian deadlift bodyweight — 2×8/side"]},
+        {name:"Full Body Circuit (2 rounds)",time:"20 min",exercises:["Goblet Squat — 10 reps","DB Romanian Deadlift — 10 reps","Push-Up — 8 reps","Banded Clamshell — 15/side","Plank — 30 sec","Rest 90 sec between rounds"]},
+        {name:"Aerobic Interval (Introductory HIIT)",time:"10 min",exercises:["30 sec moderate run / 30 sec walk — 10 rounds","Target HR: 70–80% max during work intervals"]},
+        {name:"Cool-Down",time:"2 min",exercises:["Full-body static stretch circuit"]},
+      ]},
+    ],
+  },
+  {
+    phase:"Phase 2",weeks:"Weeks 5–8",focus:"Build",color:"#facc15",
+    description:"Increase load, introduce plyometrics, and progress HIIT intensity. Volume increases, technique remains priority.",
+    sessions:[
+      {label:"Session A",subtitle:"Lower Body Strength + Plyometrics",duration:"42 min",blocks:[
+        {name:"FIFA 11+ Warm-Up",time:"10 min",exercises:["Dynamic movement circuit (same as Phase 1)","Add: box step-ups, lateral hops — 2×8/side"]},
+        {name:"Strength Block",time:"20 min",exercises:["Goblet Squat — 4×10 (increase load from Phase 1)","Romanian Deadlift (DB) — 3×10","Nordic Hamstring Curl — 3×6 (add partner assist on way up)","Bulgarian Split Squat — 3×8/side","Lateral Step-Up — 2×10/side"]},
+        {name:"Introductory Plyometrics",time:"8 min",exercises:["Box Jump (land soft, reset) — 3×5 (focus: landing mechanics)","Broad Jump — 3×4","Lateral Bound — 3×4/side","Full recovery between sets"]},
+        {name:"Cool-Down",time:"4 min",exercises:["Hip flexor, hamstring, glute stretch"]},
+      ]},
+      {label:"Session B",subtitle:"Speed Development + Upper Body",duration:"40 min",blocks:[
+        {name:"Dynamic Warm-Up + Speed Prep",time:"10 min",exercises:["A-skips, B-skips, bounding — 2×20m","Wicket drills (stride length emphasis) — 2×20m","Resisted sprint hold (band) — 4×5 sec"]},
+        {name:"Speed Block",time:"15 min",exercises:["Flying 20m sprints (10m build-up) — 5 reps","Pro-agility (5-10-5) — 4 reps/side (timed)","T-drill — 4 reps (max effort)","Full recovery (2–3 min) between each rep"]},
+        {name:"Upper Body + Core",time:"12 min",exercises:["DB Bench Press or Push-Up Variation — 3×10","Bent-Over DB Row — 3×10","Farmer Carry — 3×20m","Hollow Body Hold — 3×20 sec"]},
+        {name:"Cool-Down",time:"3 min",exercises:["Shoulder, thoracic, hip flexor"]},
+      ]},
+      {label:"Session C",subtitle:"HIIT + Full Body Power",duration:"42 min",blocks:[
+        {name:"Warm-Up",time:"10 min",exercises:["FIFA 11+ movement circuit","Med-ball slams — 2×8 (introduce explosive intent)"]},
+        {name:"Power Complex",time:"18 min",exercises:["Trap Bar Deadlift or DB Deadlift — 3×6 (heavier, explosive intent)","Broad Jump immediately after each set (contrast method) — 3×3","Push-Up + 1 Med Ball Slam superset — 3×8 each","Rest 90 sec between pairs"]},
+        {name:"HIIT Soccer Circuit",time:"12 min",exercises:["40 sec work / 20 sec rest × 3 rounds:","— Shuttle run (5m–10m–5m)","— Lateral defensive slides","— Sprint 20m, decelerate, change direction","Rest 2 min between rounds"]},
+        {name:"Cool-Down",time:"2 min",exercises:["Full-body static stretch"]},
+      ]},
+    ],
+  },
+  {
+    phase:"Phase 3",weeks:"Weeks 9–12",focus:"Power & Speed Peak",color:"#f87171",
+    description:"Maximize speed, power output, and aerobic peak capacity. Highest intensity phase.",
+    sessions:[
+      {label:"Session A",subtitle:"Max Strength + Advanced Plyometrics",duration:"45 min",blocks:[
+        {name:"Activation Warm-Up",time:"10 min",exercises:["FIFA 11+ + band walks, SL hip hinge, box step","Squat jump (very light, 5 reps — CNS activation)"]},
+        {name:"Strength Block (Heavy)",time:"22 min",exercises:["Back Squat or Trap Bar Deadlift — 4×5 (RPE 7–8/10)","Nordic Hamstring Curl — 3×6 full eccentric + concentric","Hip Thrust (DB or Barbell) — 3×8","Copenhagen Adductor Plank — 3×8 sec/side"]},
+        {name:"Advanced Plyometrics",time:"10 min",exercises:["Depth Drop → Broad Jump — 3×4","Single-Leg Hop for Distance — 3×4/side","Hurdle Hops (continuous) — 3×5","Full recovery between all sets"]},
+        {name:"Cool-Down",time:"3 min",exercises:["Foam roll, static stretch priority areas"]},
+      ]},
+      {label:"Session B",subtitle:"Peak Speed + Agility",duration:"40 min",blocks:[
+        {name:"Speed Warm-Up",time:"12 min",exercises:["Sprint drills: A-skip, B-skip, bounding — 3×20m","Wicket runs — 2×20m","Build-up runs 40m — 3 reps at 85–90%"]},
+        {name:"Max Speed Block",time:"18 min",exercises:["30m sprints (max effort) — 6 reps (full 3-min rest)","Reactive sprint: coach cue start — 4×20m","1v1 acceleration challenge — 4 reps (fun + competitive)"]},
+        {name:"Agility Circuit",time:"8 min",exercises:["L-drill — 4 timed reps","Illinois agility — 4 timed reps","Random cone react drill — 3 min"]},
+        {name:"Cool-Down",time:"2 min",exercises:["Light jog, hip/quad/hamstring holds"]},
+      ]},
+      {label:"Session C",subtitle:"Aerobic Peak + Full Body Power",duration:"44 min",blocks:[
+        {name:"Warm-Up",time:"10 min",exercises:["FIFA 11+ full circuit","Med ball throws × 10"]},
+        {name:"Power Supersets",time:"18 min",exercises:["Pair 1: Trap Bar Deadlift 4×4 + Box Jump 4×3 (contrast method)","Pair 2: DB Push Press 3×6 + Med Ball Slam 3×5","Rest 2 min between pairs"]},
+        {name:"Aerobic Peak HIIT",time:"14 min",exercises:["5 rounds of 1:1 work:rest","— 200m hard run (85–90% effort)","— 90 sec rest","Mimics repeated sprint demands of soccer (Buchheit & Laursen, 2013)"]},
+        {name:"Cool-Down",time:"2 min",exercises:["Walk 3 min, full-body static stretch"]},
+      ]},
+    ],
+  },
+];
+
+const inseasonData = {
+  overview:"2 sessions per week after practice. Goal: maintain strength and speed gains, manage fatigue, prevent injury. Volume is reduced ~40% vs. off-season; intensity maintained.",
+  sessions:[
+    {label:"Session A",subtitle:"Speed, Power & Injury Prevention",duration:"35 min",color:"#60a5fa",blocks:[
+      {name:"Dynamic Warm-Up",time:"8 min",exercises:["A-skip, B-skip, carioca — 2×15m","Hip swings, leg cradles, walking lunges","Build-up run 30m — 2 reps"]},
+      {name:"Speed / Power Block",time:"15 min",exercises:["10m acceleration sprints — 4 reps (full recovery)","Reactive sprint (visual or audio cue) — 3 reps","Box Jump — 2×4 (quality, not quantity)","Single-Leg Bound — 2×3/side"]},
+      {name:"Injury Prevention Block",time:"10 min",exercises:["Nordic Hamstring Curl — 2×5 (maintain throughout season)","Copenhagen Plank — 2×8 sec/side","Single-Leg Deadlift (bodyweight) — 2×8/side","Side-lying hip abduction — 2×12/side"]},
+      {name:"Cool-Down",time:"2 min",exercises:["Hip flexor, quad, hamstring static holds"]},
+    ]},
+    {label:"Session B",subtitle:"Strength Maintenance + Core",duration:"40 min",color:"#a78bfa",blocks:[
+      {name:"FIFA 11+ Warm-Up",time:"10 min",exercises:["Running variations — 2 min","Hip circles, lunge variations — 3 min","Glute bridges, Copenhagen holds — 5 min"]},
+      {name:"Strength Block (Reduced Volume)",time:"20 min",exercises:["Goblet Squat or Back Squat — 3×5 (maintain load from off-season)","Romanian Deadlift — 3×6","DB Push Press — 2×8","Banded Hip Thrust — 2×10","Note: Sets/reps reduced ~30–40% but weight maintained (Faigenbaum et al.)"]},
+      {name:"Core Finisher",time:"8 min",exercises:["Pallof Press — 2×10/side","Dead Bug — 2×8/side","Side Plank — 2×20 sec/side","Hollow Body Hold — 2×20 sec"]},
+      {name:"Cool-Down",time:"2 min",exercises:["Full-body stretch, foam roll if needed"]},
+    ]},
+  ],
+  weeklyNotes:[
+    "Schedule Session A on lighter practice days (e.g., tactical days), Session B on moderate days.",
+    "Avoid heavy lifting 48 hours before match days.",
+    "Reduce or skip plyometrics the day before a match.",
+    "Monitor player fatigue weekly using a simple 1–10 RPE scale.",
+    "If a player shows signs of overtraining, reduce to 1 session/week with injury prevention only.",
+  ],
+};
+
+function Badge({label,color}){return <span style={{background:color+"22",color,border:`1px solid ${color}55`,borderRadius:6,padding:"2px 10px",fontSize:11,fontWeight:700,letterSpacing:1,textTransform:"uppercase"}}>{label}</span>;}
+
+function ExerciseBlock({block}){return(
+  <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,padding:"14px 16px",marginBottom:10}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+      <span style={{fontWeight:700,fontSize:13,color:"#e2e8f0",fontFamily:"'DM Sans',sans-serif"}}>{block.name}</span>
+      <span style={{fontSize:11,color:"#94a3b8",background:"rgba(148,163,184,0.1)",padding:"2px 8px",borderRadius:20}}>{block.time}</span>
+    </div>
+    <ul style={{margin:0,paddingLeft:16}}>
+      {block.exercises.map((ex,i)=><li key={i} style={{fontSize:12.5,color:"#94a3b8",marginBottom:4,lineHeight:1.6}}>{ex}</li>)}
+    </ul>
+  </div>
+);}
+
+function SessionCard({session,accentColor,defaultOpen=false}){
+  const [open,setOpen]=useState(defaultOpen);
+  return(
+    <div style={{background:"rgba(15,23,42,0.7)",border:`2px solid ${open?accentColor+"99":accentColor+"44"}`,borderRadius:14,marginBottom:14,overflow:"hidden",transition:"border-color 0.2s"}}>
+      <button onClick={()=>setOpen(!open)} style={{width:"100%",background:open?accentColor+"14":"rgba(255,255,255,0.02)",border:"none",cursor:"pointer",padding:"16px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,transition:"background 0.2s"}}>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <div style={{width:38,height:38,borderRadius:10,background:accentColor+"22",border:`1px solid ${accentColor}55`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,color:accentColor,fontFamily:"'DM Mono',monospace"}}>{session.label.replace("Session ","")}</div>
+          <div style={{textAlign:"left"}}>
+            <div style={{fontWeight:700,color:"#f1f5f9",fontSize:14}}>{session.label} — {session.subtitle}</div>
+            <div style={{fontSize:11,color:"#64748b",marginTop:2}}>⏱ {session.duration}</div>
+          </div>
+        </div>
+        <span style={{fontSize:11,color:accentColor,background:accentColor+"18",border:`1px solid ${accentColor}44`,borderRadius:6,padding:"3px 8px",fontWeight:600,whiteSpace:"nowrap",flexShrink:0}}>{open?"▲ Collapse":"▼ Expand"}</span>
+      </button>
+      {open&&<div style={{padding:"0 16px 16px"}}>{session.blocks.map((block,i)=><ExerciseBlock key={i} block={block}/>)}</div>}
+    </div>
+  );
+}
+
+function App(){
+  const [tab,setTab]=useState("offseason");
+  const [activePhase,setActivePhase]=useState(0);
+  const [showResearch,setShowResearch]=useState(false);
+  return(
+    <div style={{minHeight:"100vh",background:"linear-gradient(135deg,#0a0f1e 0%,#0f172a 50%,#071a12 100%)",fontFamily:"'DM Sans','Segoe UI',sans-serif",color:"#f1f5f9",padding:"28px 16px 48px"}}>
+      <div style={{maxWidth:720,margin:"0 auto 28px"}}>
+        <div style={{display:"flex",alignItems:"flex-start",gap:16,marginBottom:8}}>
+          <div style={{width:52,height:52,borderRadius:14,background:"linear-gradient(135deg,#22c55e,#16a34a)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,flexShrink:0,boxShadow:"0 0 24px #22c55e44"}}>⚽</div>
+          <div>
+            <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:32,letterSpacing:2,color:"#f1f5f9",lineHeight:1.1}}>VARSITY GIRLS SOCCER</div>
+            <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:"#22c55e",letterSpacing:3}}>SPEED · STRENGTH · CONDITIONING</div>
+            <div style={{fontSize:12,color:"#64748b",marginTop:4}}>Ages 14–17 · Research-Backed · 30–45 Min Sessions</div>
+          </div>
+        </div>
+      </div>
+      <div style={{maxWidth:720,margin:"0 auto"}}>
+        <div style={{display:"flex",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:4,marginBottom:24,gap:4}}>
+          {[{id:"offseason",label:"🌿 Off-Season Program",sub:"12 weeks · 3×/week"},{id:"inseason",label:"🏆 In-Season Program",sub:"Ongoing · 2×/week"}].map(t=>(
+            <button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,border:"none",cursor:"pointer",borderRadius:9,padding:"10px 8px",background:tab===t.id?(t.id==="offseason"?"linear-gradient(135deg,#22c55e,#16a34a)":"linear-gradient(135deg,#6366f1,#4f46e5)"):"transparent",color:tab===t.id?"#fff":"#64748b",fontWeight:700,fontSize:13,transition:"all 0.2s",boxShadow:tab===t.id?"0 2px 12px rgba(0,0,0,0.3)":"none"}}>
+              <div>{t.label}</div><div style={{fontSize:10,fontWeight:400,marginTop:2,opacity:.85}}>{t.sub}</div>
+            </button>
+          ))}
+        </div>
+
+        {tab==="offseason"&&(
+          <div>
+            <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>
+              {offseasonPhases.map((p,i)=>(
+                <button key={i} onClick={()=>setActivePhase(i)} style={{flex:1,minWidth:130,border:`1.5px solid ${activePhase===i?p.color:p.color+"44"}`,borderRadius:10,padding:"10px 12px",cursor:"pointer",background:activePhase===i?p.color+"18":"rgba(255,255,255,0.02)",textAlign:"left",transition:"all 0.2s"}}>
+                  <div style={{fontSize:10,color:p.color,fontWeight:700,letterSpacing:1,textTransform:"uppercase",fontFamily:"'DM Mono',monospace"}}>{p.phase} · {p.weeks}</div>
+                  <div style={{fontWeight:700,color:activePhase===i?p.color:"#94a3b8",fontSize:14,marginTop:2}}>{p.focus}</div>
+                </button>
+              ))}
+            </div>
+            {(()=>{const phase=offseasonPhases[activePhase];return(
+              <div>
+                <div style={{background:phase.color+"0f",border:`1px solid ${phase.color}33`,borderRadius:12,padding:"14px 16px",marginBottom:20}}>
+                  <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:6}}><Badge label={phase.focus} color={phase.color}/><span style={{fontSize:12,color:"#64748b"}}>{phase.weeks}</span></div>
+                  <p style={{fontSize:13,color:"#94a3b8",margin:0,lineHeight:1.7}}>{phase.description}</p>
+                </div>
+                {phase.sessions.map((s,i)=><SessionCard key={i} session={s} accentColor={phase.color} defaultOpen={i===0}/>)}
+              </div>
+            );})()}
+            <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:16,marginTop:8}}>
+              <div style={{fontWeight:700,fontSize:13,color:"#e2e8f0",marginBottom:10}}>📈 Off-Season Progression Guidelines</div>
+              {["Increase load by 5–10% per week when 3 sets of target reps are completed with good form (progressive overload principle).","Deload in Week 4 and Week 8 — reduce volume 30–40%, maintain intensity. Critical for adolescent recovery.","Plyometric volume: start low (Phase 1: ~40 foot contacts/session), build to ~120 in Phase 3.","HIIT progression: from 30s/30s intervals in Phase 1 to 200m repeats at 85–90% effort in Phase 3.","Always prioritize landing mechanics (soft knees, hip hinge) to reduce ACL risk (Myer et al., 2011)."].map((note,i)=>(
+                <div key={i} style={{display:"flex",gap:10,marginBottom:8,alignItems:"flex-start"}}>
+                  <span style={{color:"#22c55e",fontSize:14,flexShrink:0,marginTop:1}}>→</span>
+                  <span style={{fontSize:12.5,color:"#94a3b8",lineHeight:1.6}}>{note}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab==="inseason"&&(
+          <div>
+            <div style={{background:"rgba(99,102,241,0.08)",border:"1px solid rgba(99,102,241,0.25)",borderRadius:12,padding:"14px 16px",marginBottom:20}}>
+              <div style={{fontWeight:700,color:"#a5b4fc",marginBottom:6}}>Program Overview</div>
+              <p style={{fontSize:13,color:"#94a3b8",margin:0,lineHeight:1.7}}>{inseasonData.overview}</p>
+            </div>
+            {inseasonData.sessions.map((s,i)=><SessionCard key={i} session={s} accentColor={s.color} defaultOpen={i===0}/>)}
+            <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:16,marginTop:8}}>
+              <div style={{fontWeight:700,fontSize:13,color:"#e2e8f0",marginBottom:10}}>📋 Weekly Scheduling Notes</div>
+              {inseasonData.weeklyNotes.map((note,i)=>(
+                <div key={i} style={{display:"flex",gap:10,marginBottom:8,alignItems:"flex-start"}}>
+                  <span style={{color:"#6366f1",fontSize:14,flexShrink:0,marginTop:1}}>→</span>
+                  <span style={{fontSize:12.5,color:"#94a3b8",lineHeight:1.6}}>{note}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div style={{marginTop:24}}>
+          <button onClick={()=>setShowResearch(!showResearch)} style={{width:"100%",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:10,padding:"12px 16px",cursor:"pointer",color:"#94a3b8",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13,fontWeight:600}}>
+            <span>🔬 Research &amp; Evidence Base</span><span>{showResearch?"▲":"▼"}</span>
+          </button>
+          {showResearch&&(
+            <div style={{background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.07)",borderTop:"none",borderRadius:"0 0 10px 10px",padding:16}}>
+              {research.map((r,i)=>(
+                <div key={i} style={{borderLeft:"2px solid #22c55e44",paddingLeft:12,marginBottom:12}}>
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:11,color:"#22c55e",marginBottom:3}}>{r.citation}</div>
+                  <div style={{fontSize:12.5,color:"#94a3b8",lineHeight:1.6}}>{r.note}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div style={{textAlign:"center",marginTop:28,fontSize:11,color:"#334155"}}>Consult with a certified strength & conditioning specialist (CSCS) before implementation.</div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
